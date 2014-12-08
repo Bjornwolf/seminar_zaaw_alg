@@ -1,0 +1,102 @@
+
+\documentclass{beamer}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usetheme{Montpellier}
+\beamersetuncovermixins{\opaqueness<1>{25}}{\opaqueness<2->{15}}
+
+\usecolortheme{dove}
+\begin{document}
+\title{Dwuwymiarowe Range-Minimum Queries}
+\author{}
+\date{\today} 
+
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\section{Wstęp}
+
+\subsection{Po co to wszystko}
+\begin{frame} \frametitle{Planowanie przestrzeni}
+ Gdzie budować domy, a gdzie pola?
+\end{frame}
+
+\subsection{RMQ -- co to jest?}
+\begin{frame} \frametitle{1D RMQ}
+ Dana jest jednowymiarowa tablica A rozmiaru N. $A[RMQ_{a,b}(A)] = \min_{a \leq i \leq b} A[i]$.
+\end{frame}
+
+\begin{frame} \frametitle{1D RMQ}
+ Po ludzku -- w zadanym przedziale szukamy \textbf{pozycji} najmniejszego elementu.
+\end{frame}
+
+\begin{frame} \frametitle{Wielowymiarowe RMQ}
+ RMQ można uogólnić na więcej wymiarów -- wtedy $N = n_1 \cdot n_2 \cdot \dots \cdot n_d$.
+\end{frame}
+
+\subsection{O czym powiemy}
+\begin{frame} \frametitle{Powrót do 1D i 2D}
+ Zajmiemy się jedno- i dwuwymiarowymi RMQ.
+ 
+ Przedstawioną konstrukcję można uogólnić na więcej wymiarów.
+\end{frame}
+
+\section{1D -- metody naiwne}
+\subsection{Drzewo przedziałowe}
+\begin{frame} \frametitle{Co to?}
+ Powtórka z AiSD.
+ 
+ Czy to nas satysfakcjonuje?
+ \pause (i dlaczego nie)
+\end{frame}
+
+\subsection{Drzewo kartezjańskie}
+\begin{frame} \frametitle{Co to?}
+ CT [] = E
+ 
+ CT rng = 
+ 
+ let m = min rng
+ 
+ in T(CT rng[0:m], m, CT rng[m+1:n])
+\end{frame}
+
+\begin{frame} \frametitle{Jak je zastosować?}
+ 
+\end{frame}
+
+\begin{frame} \frametitle{Co w 2D?}
+ W 1D ratuje nas tani preprocesing przypadków małych.
+ 
+ W 2D jednak...
+\end{frame}
+
+\begin{frame} \frametitle{Podsumowanie}
+ W przypadku jednowymiarowym drzewa kartezjańskie działają dobrze.
+ 
+ Nie dają się jednak uogólnić na więcej wymiarów.
+\end{frame}
+
+\section{Struktura Yuana-Atallaha}
+
+\subsection{Wstęp}
+\begin{frame} \frametitle{Wstęp}
+ Yuan i Atallah (2010) stworzyli strukturę, która dobrze się uogólnia na więcej wymiarów.
+\end{frame}
+
+\begin{frame} \frametitle{Idea}
+ 
+\end{frame}
+
+\begin{frame} \frametitle{Struktura}
+ 
+\end{frame}
+
+\begin{frame} \frametitle{Szkic dowodu}
+ Szkic dowodu
+\end{document}
