@@ -10,21 +10,16 @@
 \usecolortheme{dove}
 \begin{document}
 \title{Dwuwymiarowe Range-Minimum Queries}
-\author{}
-\date{\today} 
+\subtitle{Tablice Yuana-Atallaha}
+\author{Filip Chudy}
+\date{\today}
 
 
 \begin{frame}
 \titlepage
 \end{frame}
 
-
 \section{Wstęp}
-
-\subsection{Po co to wszystko}
-\begin{frame} \frametitle{Planowanie przestrzeni}
- Gdzie budować domy, a gdzie pola?
-\end{frame}
 
 \subsection{RMQ -- co to jest?}
 \begin{frame} \frametitle{1D RMQ}
@@ -37,33 +32,45 @@
 
 \begin{frame} \frametitle{Wielowymiarowe RMQ}
  RMQ można uogólnić na więcej wymiarów -- wtedy $N = n_1 \cdot n_2 \cdot \dots \cdot n_d$.
+ 
+ Przedział jest wtedy prostokątny.
+\end{frame}
+
+
+\subsection{Po co to wszystko}
+\begin{frame} \frametitle{1D}
+ We wszystkich pracach piszą, że RMQ przydaje się w algorytmach tekstowych.
+\end{frame}
+
+\begin{frame} \frametitle{2D}
+TODO screen z cywilizacji.
+
+ Policzyliśmy wartości wszystkich pól, gdzie mamy postawić miasto?
+ 
+ Innymi słowy -- bot.
 \end{frame}
 
 \subsection{O czym powiemy}
-\begin{frame} \frametitle{Powrót do 1D i 2D}
- Zajmiemy się jedno- i dwuwymiarowymi RMQ.
- 
- Przedstawioną konstrukcję można uogólnić na więcej wymiarów.
+\begin{frame} \frametitle{Praca Yuana i Atallaha}
+ Rozwiązanie ogólne dla każdej \strong{USTALONEJ} liczby wymiarów.
 \end{frame}
 
-\section{1D -- metody naiwne}
+
+\section{1D -- pierwsze kroki}
 \subsection{Drzewo przedziałowe}
 \begin{frame} \frametitle{Co to?}
  Powtórka z AiSD.
- 
- Czy to nas satysfakcjonuje?
- \pause (i dlaczego nie)
+ \pause (BARDZO SŁABE)
 \end{frame}
 
 \subsection{Drzewo kartezjańskie}
 \begin{frame} \frametitle{Co to?}
- CT [] = E
- 
- CT rng = 
- 
- let m = min rng
- 
- in T(CT rng[0:m], m, CT rng[m+1:n])
+ Niech $i = \argmin A$. Drzewo kartezjańskie CT(A):
+ \begin{itemize}
+  \item ma w korzeniu A[i].
+  \item jako lewego syna ma A[1..i-1].
+  \item jako prawego syna ma A[i+1..n].
+ \end{itemize}
 \end{frame}
 
 \begin{frame} \frametitle{Jak je zastosować?}
