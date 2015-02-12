@@ -14,16 +14,14 @@
 \author{Filip Chudy}
 \date{\today}
 
-
 \begin{frame}
 \titlepage
 \end{frame}
 
 \section{Wstęp}
-
 \subsection{RMQ -- co to jest?}
 \begin{frame} \frametitle{1D RMQ}
- Dana jest jednowymiarowa tablica A rozmiaru N. $A[RMQ_{a,b}(A)] = \min_{a \leq i \leq b} A[i]$.
+ Dana jest jednowymiarowa tablica A rozmiaru N. $RMQ_{a,b}(A) = \arg\min_{a \leq i \leq b} A[i]$.
 \end{frame}
 
 \begin{frame} \frametitle{1D RMQ}
@@ -31,11 +29,12 @@
 \end{frame}
 
 \begin{frame} \frametitle{Wielowymiarowe RMQ}
- RMQ można uogólnić na więcej wymiarów -- wtedy $N = n_1 \cdot n_2 \cdot \dots \cdot n_d$.
+ RMQ można uogólnić na więcej wymiarów.
+ 
+ $N = n_1 \cdot n_2 \cdot \dots \cdot n_d$.
  
  Przedział jest wtedy prostokątny.
 \end{frame}
-
 
 \subsection{Po co to wszystko}
 \begin{frame} \frametitle{1D}
@@ -43,68 +42,168 @@
 \end{frame}
 
 \begin{frame} \frametitle{2D}
-TODO screen z cywilizacji.
-
- Policzyliśmy wartości wszystkich pól, gdzie mamy postawić miasto?
+\begin{columns}
+\begin{column}{5cm}
+\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{civ.png}
+\end{column}
+\begin{column}{5cm}
+Policzyliśmy wartości funkcji jakości dla wszystkich pól, gdzie mamy postawić miasto?
  
  Innymi słowy -- bot.
+\end{column} 
+\end{columns} 
 \end{frame}
 
 \subsection{O czym powiemy}
 \begin{frame} \frametitle{Praca Yuana i Atallaha}
- Rozwiązanie ogólne dla każdej \strong{USTALONEJ} liczby wymiarów.
+ Rozwiązanie ogólne dla każdej \textbf{USTALONEJ} liczby wymiarów.
 \end{frame}
 
 
 \section{1D -- pierwsze kroki}
-\subsection{Drzewo przedziałowe}
-\begin{frame} \frametitle{Co to?}
- Powtórka z AiSD.
- \pause (BARDZO SŁABE)
-\end{frame}
 
-\subsection{Drzewo kartezjańskie}
-\begin{frame} \frametitle{Co to?}
- Niech $i = \argmin A$. Drzewo kartezjańskie CT(A):
+\begin{frame} \frametitle{Drzewo kartezjańskie}
+ Niech $i = \arg\min A$. Drzewo kartezjańskie CT(A)
  \begin{itemize}
   \item ma w korzeniu A[i].
-  \item jako lewego syna ma A[1..i-1].
-  \item jako prawego syna ma A[i+1..n].
+  \item jako lewego syna ma CT(A[1..i-1]).
+  \item jako prawego syna ma CT(A[i+1..n]).
  \end{itemize}
 \end{frame}
 
-\begin{frame} \frametitle{Jak je zastosować?}
- 
-\end{frame}
-
-\begin{frame} \frametitle{Co w 2D?}
- W 1D ratuje nas tani preprocesing przypadków małych.
- 
- W 2D jednak...
-\end{frame}
-
-\begin{frame} \frametitle{Podsumowanie}
+\begin{frame} \frametitle{Drzewo kartezjańskie}
  W przypadku jednowymiarowym drzewa kartezjańskie działają dobrze.
  
  Nie dają się jednak uogólnić na więcej wymiarów.
 \end{frame}
 
-\section{Struktura Yuana-Atallaha}
+\section{Tablice Yuana-Atallaha (1D)}
 
 \subsection{Wstęp}
 \begin{frame} \frametitle{Wstęp}
  Yuan i Atallah (2010) stworzyli strukturę, która dobrze się uogólnia na więcej wymiarów.
 \end{frame}
 
-\begin{frame} \frametitle{Idea}
- 
+\begin{frame} \frametitle{Osłabienie modelu}
+ Drzewa kartezjańskie:
+ \begin{enumerate}
+  \item Zwracamy dokładne pozycje kolejnych minimów.
+  \item Preprocesing w czasie liniowym.
+ \end{enumerate}
 \end{frame}
 
-\begin{frame} \frametitle{Struktura}
- 
+\begin{frame} \frametitle{Osłabienie modelu}
+ Tablice Y-A:
+ \begin{enumerate}
+  \item Zwracamy $O(1)$ kandydatów na minimum.
+  \item Preprocesing w czasie liniowym.
+\end{enumerate}
 \end{frame}
 
-\begin{frame} \frametitle{Szkic dowodu}
- Szkic dowodu
+\begin{frame} \frametitle{Trochę założeń}
+ Bez straty ogólności:
+ \begin{itemize}
+  \item rozmiar tablicy jest potęgą dwójki,
+  \item wszystkie elementy tablicy są różne
+ \end{itemize}
+\end{frame} 
+
+\begin{frame} \frametitle{W co celujemy ze strukturą}
+ Rozmiar -- $O(n\log n)$.
+ 
+ Porównania -- $4n$.
 \end{frame}
+
+\subsection{Struktura}
+\begin{frame} \frametitle{Przedziały kanoniczne}
+ $[k 2^i + 1, (k + 1) 2^i]$
+ 
+ Czyli cała tablica, jej połówki, ćwiartki...
+\end{frame}
+
+\begin{frame} \frametitle{Tablice właściwe}
+ $LeftMin(I,x) = \min_{i \leq x, i \in I} A[i]$
+ 
+ $RightMin(I,x) = \min_{i \geq x, i \in I} A[i]$
+\end{frame}
+
+\begin{frame} \frametitle{Szybkie liczenie tablic}
+ Rozważymy tylko LeftMin.
+ 
+ RightMin jest analogiczny.
+\end{frame}
+
+\begin{frame} \frametitle{Szybkie liczenie tablic}
+ Gdy przedział I jest jednoelementowy, $LeftMin(I,\cdot) = i$.
+ 
+ LeftMin od większych przedziałów będziemy budowali na podstawie wyników dla mniejszych.
+\end{frame}
+
+\begin{frame} \frametitle{LeftMin}
+ Łączenie $LeftMin(I_1,\cdot)$ i $LeftMin(I_2,\cdot)$ w $LeftMin(I_1 + I_2,\cdot)$.
+\end{frame}
+
+\begin{frame} \frametitle{Koszt}
+ $Comp(n) = 2 Comp(\frac{n}{2}) + 2 \log n$
+ 
+ Czyli $Comp(n) \leq 4 n$.
+\end{frame}
+
+\subsection{Zapytania}
+\begin{frame} \frametitle{Jak obsługujemy zapytania?}
+ Dla zapytania $q$:
+ 
+ $q \rightarrow SolveQuery([1,n], q)$
+\end{frame}
+
+\begin{frame} \frametitle{Jak obsługujemy zapytania?}
+ $SolveQuery(I=[u,v], q=[a,b])$
+
+ $a = u \rightarrow LeftMin(I, b)$ \linebreak
+ $b = v \rightarrow RightMin(I, a)$\linebreak
+ Niech $I = I_1 + I_2$.\linebreak
+ $q \subseteq I_1 \rightarrow SolveQuery(I_1, q)$\linebreak
+ $q \subseteq I_2 \rightarrow SolveQuery(I_2, q)$\linebreak
+ $else \rightarrow \min (RightMin(I_1, a), LeftMin(I_2, b)$.
+  
+\end{frame}
+
+\begin{frame} \frametitle{Pozbywanie się logarytmu}
+Pytamy o przedział $[a,b]$.
+
+Szukany przedział kanoniczny dostaniemy z $LCA(a,b)$.
+\end{frame}
+
+\begin{frame} \frametitle{Zróbmy to w RAM-ie}
+ Obecne rozwiązanie nadal zużywa $O(n \log n)$.
+\end{frame}
+
+\begin{frame} \frametitle{Pocięcie struktury}
+ Podzielmy $A$ na rozłączne segmenty $s_i$ rozmiaru $g = c_1 \log n$.
+ 
+ Będzie ich $\frac{n}{g}$.
+\end{frame}
+
+\begin{frame} \frametitle{Pocięcie struktury}
+ Wyróżnimy dwa rodzaje struktur:
+ \begin{itemize}
+  \item strukturę ogólną spinającą segmenty,
+  \item strukturę lokalną dla każdego segmentu
+ \end{itemize}
+\end{frame}
+
+\begin{frame} \frametitle{Obsługa zapytań}
+ Dla zapytania $q$:
+ 
+ $\exists_i q \subseteq s_i \rightarrow RMQ(s_i, q)$\linebreak
+ $\exists_i q \subseteq s_i + s_{i+1} \rightarrow \min (RMQ(s_i, q_1), RMQ(s_{i+1}, q_2))$\linebreak
+ $else$ skrajne segmenty jak wyżej, wewnętrzne strukturą ogólną
+\end{frame}
+
+\begin{frame} \frametitle{Struktura ogólna}
+ Zastosujemy tablice Y-A.
+ 
+ Koszt:$O(\frac{n}{g} \log \frac{n}{g}) = O(n)$.
+\end{frame}
+
 \end{document}
